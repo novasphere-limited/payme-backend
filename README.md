@@ -5,7 +5,8 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+  <p align="center"> <a href="http://payme.com" target="_blank"> PayyMe </a> is a fintech solution that aims to revolutionize the way money is transferred and paid for in Nigeria. This solution merges the modern and traditional ways of transferring money, allowing even the un-banked population to access and use it. It is designed to be simple, fast, and reliable, making it suitable for both the market women and the hotshots like suppliers and distributors. </p>
+
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
