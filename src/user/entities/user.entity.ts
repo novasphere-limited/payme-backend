@@ -4,12 +4,16 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { IsEmail } from 'class-validator';
 import { Role } from 'src/roles/entities/role.entity';
+import { Wallet } from 'src/wallet/entities/wallet.entity';
+import { Transaction } from 'src/transaction/entities/transaction.entity';
 
 @Entity('user')
 @Unique(['email'])
@@ -51,6 +55,12 @@ export class User {
 
   @ManyToOne(() => Role, (role) => role.users, { eager: true })
   role: Role;
+
+  @OneToOne(() => Wallet, (wallet) => wallet.user)
+  wallet: Wallet;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.user)
+  transaction: Transaction[];
 
   @BeforeInsert()
   async hashPassword() {
