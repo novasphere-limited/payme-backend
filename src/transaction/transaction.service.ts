@@ -66,7 +66,7 @@ export class TransactionService {
         const savedTransaction = await this.transactionRepository.save(
           createdTransaction,
         );
-        console.log(savedTransaction);
+        
         return savedTransaction;
       }
     } catch (error) {
