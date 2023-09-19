@@ -42,7 +42,7 @@ export class TransactionService {
         throw new ForbiddenException('You cannot carry out this operation');
 
       if (wallet.balance < amount)
-        throw new BadRequestException('Insufficient balance');
+        throw new BadRequestException('Insufficient balance.');
 
       if (transactionType === 'Transfer') {
         const walletToCredit = await this.walletRepository.findOneBy({
