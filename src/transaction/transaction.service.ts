@@ -11,15 +11,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { TransactionDto } from './dto/transaction.dto';
-import { UUID } from 'crypto';
+import { MessagingService } from 'src/messaging/messaging.service';
+import { LoggingService } from 'src/logging/logging.service';
 
 @Injectable()
 export class TransactionService {
   constructor(
+    private messagingService : MessagingService,
     @InjectRepository(Wallet)
     private readonly walletRepository: Repository<Wallet>,
     @InjectRepository(Transaction)
     private readonly transactionRepository: Repository<Transaction>,
+    private readonly loggingService: LoggingService
   ) {}
 
   async createTransaction(
@@ -27,6 +30,10 @@ export class TransactionService {
     user: any,
   ): Promise<Transaction> {
     try {
+        this.loggingService.log({
+            event: 'method_start',
+            message: 'creating a transaction',
+        });
       delete user.password;
       const { amount, transactionType, transferToId } = transactionDto;
       const { id } = user;
@@ -65,8 +72,12 @@ export class TransactionService {
 
         const savedTransaction = await this.transactionRepository.save(
           createdTransaction,
-        );
         
+        );
+        await Promise.all([
+             this.messagingService.sendEmail({email:"eezzy2k3@yahoo.com",subject:"testing",message:"test"}),
+             this.messagingService.sendSms("+2348065257619","hello")
+        ])
         return savedTransaction;
       }
     } catch (error) {
@@ -76,6 +87,7 @@ export class TransactionService {
         },
         HttpStatus.BAD_REQUEST,
       );
+      
     }
   }
 

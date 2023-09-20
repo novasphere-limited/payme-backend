@@ -8,6 +8,8 @@ import { JwtService } from '@nestjs/jwt';
 import { RolePermissionModule } from './roles/role-permission.module';
 import { WalletModule } from './wallet/wallet.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { MessagingModule } from './messaging/messaging.module';
+import { LoggingModule } from './logging/logging.module';
 
 @Module({
   imports: [
@@ -18,7 +20,7 @@ import { TransactionModule } from './transaction/transaction.module';
     TransactionModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'postgres',
       port: parseInt(process.env.DATABASE_PORT, 10),
       host: process.env.DATABASE_HOST,
       username: process.env.DATABASE_USERNAME,
@@ -30,6 +32,8 @@ import { TransactionModule } from './transaction/transaction.module';
       migrations: ['src/migration/*{.ts,.js}'],
       // logging: true,
     }),
+    MessagingModule,
+    LoggingModule,
   ],
   providers: [
     JwtService,

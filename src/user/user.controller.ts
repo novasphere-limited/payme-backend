@@ -6,6 +6,9 @@ import {
   Param,
   Post,
   Put,
+  Query,
+  DefaultValuePipe,
+  ParseIntPipe,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -16,6 +19,8 @@ import { Permissions } from 'src/common/decorators/permissions.decorator';
 import { PermissionInterceptor } from 'src/common/interceptors/permission.interceptor';
 import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 import { BaseResponse } from 'src/common/utils';
+import { Pagination } from 'nestjs-typeorm-paginate';
+
 
 @ApiBearerAuth()
 @ApiTags('User Manager')
@@ -59,4 +64,22 @@ export class UserController {
       result: updatedUser,
     };
   }
+  @ApiResponse({
+    status: 200,
+    description: 'All User has successfully been retreived.',
+  })
+  @Get('')
+  async getAllUsers(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+  ): Promise<Pagination<User>> {
+    limit = limit > 100 ? 100 : limit;
+    return this.userService.allUsers({
+      page,
+      limit,
+    });
+
+    
+  }
+
 }

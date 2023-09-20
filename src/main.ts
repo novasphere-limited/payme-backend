@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from './config/config.service';
 import * as basicAuth from "express-basic-auth";
+import { Logger, LoggerErrorInterceptor } from 'nestjs-pino';
 
 async function bootstrap() {
 
@@ -12,6 +13,8 @@ async function bootstrap() {
   app.enableCors({
     origin: '*',
   });
+  app.useLogger(app.get(Logger));
+  app.useGlobalInterceptors(new LoggerErrorInterceptor());
   app.use(`/api/v1/swagger*`,
     basicAuth({
       challenge: true,
