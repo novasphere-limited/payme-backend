@@ -6,12 +6,18 @@ import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from './config/config.service';
 import { JwtService } from '@nestjs/jwt';
 import { RolePermissionModule } from './roles/role-permission.module';
+import { WalletModule } from './wallet/wallet.module';
+import { TransactionModule } from './transaction/transaction.module';
+import { MessagingModule } from './messaging/messaging.module';
+import { LoggingModule } from './logging/logging.module';
 
 @Module({
   imports: [
     AuthModule,
     UserModule,
     RolePermissionModule,
+    WalletModule,
+    TransactionModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -26,6 +32,8 @@ import { RolePermissionModule } from './roles/role-permission.module';
       migrations: ['src/migration/*{.ts,.js}'],
       // logging: true,
     }),
+    MessagingModule,
+    LoggingModule,
   ],
   providers: [
     JwtService,

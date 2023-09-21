@@ -5,6 +5,9 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 import { RolePermissionService } from 'src/roles/role-permission.service';
+import { paginate,Pagination,IPaginationOptions } from 'nestjs-typeorm-paginate';
+import { LoggingService } from 'src/logging/logging.service';
+
 
 @Injectable()
 export class UserService {
@@ -12,6 +15,7 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly rolePremissionService: RolePermissionService,
+    private readonly loggingService: LoggingService
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -68,4 +72,26 @@ export class UserService {
       HttpStatus.BAD_REQUEST,
     );
   }
+
+  async allUsers(options: IPaginationOptions): Promise<Pagination<User>> {
+    try {
+      this.loggingService.log({
+        event:"method_start",
+        message:"Getting all users"
+      })
+      
+      const users = await paginate<User>(this.userRepository, options);
+      
+      return users
+    } catch (error) {
+      throw new HttpException(
+        {
+          message: 'Error: ' + error,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+   
+  }
+
 }
