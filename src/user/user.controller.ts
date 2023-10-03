@@ -10,6 +10,7 @@ import {
   DefaultValuePipe,
   ParseIntPipe,
   UseInterceptors,
+  Res
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
@@ -20,21 +21,34 @@ import { PermissionInterceptor } from 'src/common/interceptors/permission.interc
 import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 import { BaseResponse } from 'src/common/utils';
 import { Pagination } from 'nestjs-typeorm-paginate';
+import { CacheInterceptor } from '@nestjs/cache-manager';
+import {Response} from 'express'
+import { NotificationService } from 'src/notification/notification.service';
 
 
 @ApiBearerAuth()
 @ApiTags('User Manager')
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService,
+    private readonly notificationService:NotificationService) {}
 
   @ApiResponse({
     status: 201,
     description: 'The User has successfully been created.',
   })
-  @Post('create')
-  public async create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return await this.userService.create(createUserDto);
+  @Get('create/user')
+  public async create( @Query("sender") sender: string,
+  @Query("message") message:string, @Res() res: Response) {
+    try {
+      await this.userService.create(sender,message);
+      res.setHeader('Content-Type', 'text/plain')
+      return res.send("Account successfully created")
+    } catch (error) {
+      res.setHeader('Content-Type', 'text/plain');
+      return res.send(error.message);
+    }
+    
   }
 
   @ApiResponse({
@@ -79,6 +93,37 @@ export class UserController {
       limit,
     });
 
+    
+  }
+
+  @ApiResponse({
+    status: 200,
+    description: 'The User role has successfully been updated.',
+  })
+  @Get('verify-user/verify')
+  public async confirmUser(
+    @Query("sender") sender: string,
+    @Query("message") message:string,
+    @Res() res: Response
+  ) {
+    try {
+      const updatedUser = await this.userService.verifyUser(
+        sender,message
+      );
+     
+      
+        const note = await this.notificationService.keywordNotification("Register")
+        console.log(note)
+        note.message = note.message.replace("[name]", updatedUser.fullName);
+        note.message = note.message.replace("[date of birth]", updatedUser.redactedDate);
+        note.message = note.message.replace("[trans code]", updatedUser.transCode);
+        console.log(typeof note.message)
+      res.setHeader('Content-Type', 'text/plain')
+      res.send(note.message)
+    } catch (error) {
+      res.setHeader('Content-Type', 'text/plain');
+      return res.send(error.message);
+    }
     
   }
 

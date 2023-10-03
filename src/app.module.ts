@@ -10,17 +10,31 @@ import { WalletModule } from './wallet/wallet.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { MessagingModule } from './messaging/messaging.module';
 import { LoggingModule } from './logging/logging.module';
+import { HelperModule } from './helper/helper.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import * as redisStore from 'cache-manager-redis-store';
+import type { RedisClientOptions } from 'redis';
+import { NotificationModule } from './notification/notification.module';
+import { TtlModule } from './ttl/ttl.module';
+import { TransactionLogModule } from './transaction-log/transaction-log.module';
 
 @Module({
   imports: [
+    CacheModule.register({
+      isGlobal: true,
+      store: redisStore,
+      host: 'localhost',
+      port: 6379,
+      ttl: 0
+    }),
     AuthModule,
     UserModule,
     RolePermissionModule,
     WalletModule,
     TransactionModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'postgres',
       port: parseInt(process.env.DATABASE_PORT, 10),
       host: process.env.DATABASE_HOST,
       username: process.env.DATABASE_USERNAME,
@@ -34,11 +48,12 @@ import { LoggingModule } from './logging/logging.module';
     }),
     MessagingModule,
     LoggingModule,
+    HelperModule,
+    NotificationModule,
+    TtlModule,
+    TransactionLogModule,
   ],
-  providers: [
-    JwtService,
-    ConfigService,
-  ],
+  providers: [JwtService, ConfigService],
 })
 export class AppModule {
   static port: number;

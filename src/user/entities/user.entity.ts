@@ -22,7 +22,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   username: string;
 
   @Column({ default: '' })
@@ -31,12 +31,15 @@ export class User {
   @Column({ default: '' })
   last_name: string;
 
-  @Column()
+  @Column({ nullable: true })
   @IsEmail()
   email: string;
 
   @Column()
   password: string;
+
+  @Column({ nullable: true })
+  date_of_birth: string;
 
   @Column({ default: '', length: 15 })
   mobile_number: string;

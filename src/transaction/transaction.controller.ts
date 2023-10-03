@@ -10,12 +10,15 @@ import {
   ParseIntPipe,
   ParseUUIDPipe,
   ParseFloatPipe,
+  Query,
+  Res
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { localAuthGuard } from 'src/auth/guards/local-auth.guard';
 import { BaseResponse } from 'src/common/utils';
 import { TransactionService } from './transaction.service';
 import { TransactionDto } from './dto/transaction.dto';
+import {Response} from 'express'
 
 ApiBearerAuth();
 @ApiTags('Transactions')
@@ -75,4 +78,28 @@ export class TransactionController {
       result: transaction,
     };
   }
+
+  @ApiResponse({
+    status: 201,
+    description: 'The Transactin has successfully been created.',
+  })
+ 
+  @Get('sms-transaction/test')
+  async smsTransaction(
+    @Query("sender") sender: string,
+    @Query("message") message:string,
+    @Res() res: Response
+  ) {
+    const transaction = await this.transactionService.smsTransaction(sender,message );
+    console.log("success");
+    res.setHeader('Content-Type', 'text/plain')
+   return res.send("success")
+    
+    // return {
+    //   message: 'Transaction has successfully been created.',
+    //   status: HttpStatus.CREATED,
+    //   result: transaction,
+    // };
+  }
+
 }

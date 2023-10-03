@@ -122,4 +122,21 @@ export class TransactionService {
       );
     }
   }
+  async smsTransaction(sender:string,message:string){
+    try {
+       const data ={
+        sender,
+        message
+       }
+        console.log(data)
+        return data
+    } catch (error) {
+      throw new HttpException(
+        {
+          message: 'Error: ' + error,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
 }
