@@ -6,4 +6,20 @@ export class WalletDto {
   @ApiProperty()
   @IsNotEmpty()
   user: User;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  wallet_id: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  wallet_code?: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  account_number: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  bank: string;
 }

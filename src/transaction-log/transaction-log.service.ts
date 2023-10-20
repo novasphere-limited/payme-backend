@@ -85,7 +85,7 @@ export class TransactionLogService {
               if (status) {
                 queryBuilder.where('translog.status = :status', { status });
               }
-            
+              queryBuilder.orderBy('translog.created_date', 'DESC');
               const translogs = await paginate<Translog>(queryBuilder, options);
               this.loggingService.log({
                 event: 'method_end',

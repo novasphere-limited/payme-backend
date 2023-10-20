@@ -29,8 +29,14 @@ export class Translog {
 
   @Column()
   description: string;
+
+  @Column({ nullable: true })
+  message: string;
+
+  @Column({ nullable: true })
+  requested_by: string;
  
-  @Column()
+  @Column({nullable:true})
   transaction_code: number;
 
   @Column({ nullable: true })

@@ -11,6 +11,7 @@ import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { WalletService } from './wallet.service';
 import { localAuthGuard } from 'src/auth/guards/local-auth.guard';
 import { BaseResponse } from 'src/common/utils';
+import { WalletDto } from './dto/wallet.dto';
 
 @ApiBearerAuth()
 @ApiTags('Wallet')
@@ -21,10 +22,10 @@ export class WalletController {
     status: 201,
     description: 'The Wallet has successfully been created.',
   })
-  @UseGuards(localAuthGuard)
+  // @UseGuards(localAuthGuard)
   @Post('create-wallet')
-  async create(@Request() req: any): Promise<BaseResponse> {
-    const wallet = await this.walletService.createWallet(req.user);
+  async create(@Body() walletDto: WalletDto): Promise<BaseResponse> {
+    const wallet = await this.walletService.createWallet(walletDto);
     return {
       message: 'Wallet has successfully been created.',
       status: HttpStatus.CREATED,

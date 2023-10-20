@@ -41,9 +41,13 @@ export class UserController {
   public async create( @Query("sender") sender: string,
   @Query("message") message:string, @Res() res: Response) {
     try {
-      await this.userService.create(sender,message);
+    const response =  await this.userService.create(sender,message);
+      const note = await this.notificationService.keywordNotification("Confirm_Registeration")
+      console.log(note)
+      note.message = note.message.replace("[account number]", response.wallet.account_number);
+      note.message = note.message.replace("[bank]", response.wallet.bank);
       res.setHeader('Content-Type', 'text/plain')
-      return res.send("Account successfully created")
+      return res.send(note.message)
     } catch (error) {
       res.setHeader('Content-Type', 'text/plain');
       return res.send(error.message);
@@ -113,11 +117,9 @@ export class UserController {
      
       
         const note = await this.notificationService.keywordNotification("Register")
-        console.log(note)
         note.message = note.message.replace("[name]", updatedUser.fullName);
         note.message = note.message.replace("[date of birth]", updatedUser.redactedDate);
         note.message = note.message.replace("[trans code]", updatedUser.transCode);
-        console.log(typeof note.message)
       res.setHeader('Content-Type', 'text/plain')
       res.send(note.message)
     } catch (error) {

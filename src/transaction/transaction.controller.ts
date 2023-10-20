@@ -19,32 +19,36 @@ import { BaseResponse } from 'src/common/utils';
 import { TransactionService } from './transaction.service';
 import { TransactionDto } from './dto/transaction.dto';
 import {Response} from 'express'
+import { NotificationService } from 'src/notification/notification.service';
 
 ApiBearerAuth();
 @ApiTags('Transactions')
 @Controller('transaction')
 export class TransactionController {
-  constructor(private readonly transactionService: TransactionService) {}
+  constructor(private readonly transactionService: TransactionService,
+    private readonly notificationService:NotificationService) {}
 
   @ApiResponse({
     status: 201,
     description: 'The Transactin has successfully been created.',
   })
-  @UseGuards(localAuthGuard)
-  @Post('create-transaction')
-  async create(
-    @Body() transactionDto: TransactionDto,
-    @Request() req: any,
-  ): Promise<BaseResponse> {
+ 
+  @Post('sms/confirm-transaction')
+  async confirmTransaction(
+    @Query("sender") sender: string,
+    @Query("message") message:string,
+    @Res() res: Response
+  ) {
     const transaction = await this.transactionService.createTransaction(
-      transactionDto,
-      req.user,
+      sender,message 
     );
-    return {
-      message: 'Transaction has successfully been created.',
-      status: HttpStatus.CREATED,
-      result: transaction,
-    };
+    const note = await this.notificationService.keywordNotification("Confirm_Transfer")
+    // note.message = note.message.replace("[amount]", transaction.amount);
+    // note.message = note.message.replace("[account name]", transaction.account_name);
+    // note.message = note.message.replace("[Pin]", transaction.redactedPassword);
+    // note.message = note.message.replace("[transaction code]", transaction.transCode);
+    res.setHeader('Content-Type', 'text/plain')
+   return res.send(note.message)
   }
 
   @ApiResponse({
@@ -84,22 +88,21 @@ export class TransactionController {
     description: 'The Transactin has successfully been created.',
   })
  
-  @Get('sms-transaction/test')
+  @Get('sms-transaction/transfer')
   async smsTransaction(
     @Query("sender") sender: string,
     @Query("message") message:string,
     @Res() res: Response
   ) {
     const transaction = await this.transactionService.smsTransaction(sender,message );
-    console.log("success");
+    const note = await this.notificationService.keywordNotification("Confirm_Transfer")
+    note.message = note.message.replace("[amount]", transaction.amount);
+    note.message = note.message.replace("[account name]", transaction.account_name);
+    note.message = note.message.replace("[Pin]", transaction.redactedPassword);
+    note.message = note.message.replace("[transaction code]", transaction.transCode);
     res.setHeader('Content-Type', 'text/plain')
-   return res.send("success")
+   return res.send(note.message)
     
-    // return {
-    //   message: 'Transaction has successfully been created.',
-    //   status: HttpStatus.CREATED,
-    //   result: transaction,
-    // };
   }
 
 }

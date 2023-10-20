@@ -17,7 +17,7 @@ import { Transaction } from 'src/transaction/entities/transaction.entity';
 
 @Entity('user')
 @Unique(['email'])
-@Unique(['mobile_number'])
+// @Unique(['mobile_number'])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -37,6 +37,9 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({nullable:true})
+  ivm: string;
 
   @Column({ nullable: true })
   date_of_birth: string;
@@ -65,11 +68,11 @@ export class User {
   @OneToMany(() => Transaction, (transaction) => transaction.user)
   transaction: Transaction[];
 
-  @BeforeInsert()
-  async hashPassword() {
-    const salt = await bcrypt.genSaltSync(10);
-    this.password = await bcrypt.hashSync(this.password, salt);
-  }
+  // @BeforeInsert()
+  // async hashPassword() {
+  //   const salt = await bcrypt.genSaltSync(10);
+  //   this.password = await bcrypt.hashSync(this.password, salt);
+  // }
 
   @BeforeInsert()
   async addCreatedate() {

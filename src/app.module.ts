@@ -17,6 +17,7 @@ import type { RedisClientOptions } from 'redis';
 import { NotificationModule } from './notification/notification.module';
 import { TtlModule } from './ttl/ttl.module';
 import { TransactionLogModule } from './transaction-log/transaction-log.module';
+import { ConfigcatModule } from './configcat/configcat.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { TransactionLogModule } from './transaction-log/transaction-log.module';
     NotificationModule,
     TtlModule,
     TransactionLogModule,
+    ConfigcatModule,
   ],
   providers: [JwtService, ConfigService],
 })

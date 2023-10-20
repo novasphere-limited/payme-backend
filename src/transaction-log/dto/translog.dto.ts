@@ -1,7 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-
 export class TranslogDto {
   @ApiProperty()
   request_time?: string;
@@ -28,4 +27,11 @@ export class TranslogDto {
   @IsNotEmpty()
   transaction_code: number;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  message?: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  requested_by?: string;
 }
