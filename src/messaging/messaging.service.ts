@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as nodemailer from 'nodemailer';
 import * as Twilio from 'twilio';
 
@@ -7,18 +8,18 @@ export class MessagingService {
   private transporter;
   private smsClient;
 
-  constructor() {
+  constructor(private config: ConfigService) {
     this.transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT, 10),
+      host: this.config.get('SMTP_HOST'),
+      port: parseInt(this.config.get('SMTP_PORT'), 10),
       auth: {
-        user: process.env.SMTP_EMAIL,
-        pass: process.env.SMTP_PASSWORD,
+        user: this.config.get('SMTP_EMAIL'),
+        pass: this.config.get('SMTP_PASSWORD'),
       },
     });
     this.smsClient = Twilio(
-      process.env.TWILIO_ACCOUNT_SID,
-      process.env.TWILIO_AUTH_TOKEN,
+      this.config.get('TWILIO_ACCOUNT_SID'),
+      this.config.get('TWILIO_AUTH_TOKEN'),
     );
   }
 
@@ -28,7 +29,7 @@ export class MessagingService {
     message: string;
   }) {
     const message = {
-      from: process.env.SMTP_FROM_MAIL,
+      from: this.config.get('SMTP_FROM_MAIL'),
       to: options.email,
       subject: options.subject,
       html: options.message,

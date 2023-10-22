@@ -1,5 +1,3 @@
-
-
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,18 +6,28 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-  JoinColumn,
-  OneToOne,
-  Unique,
+  Generated
 } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Transaction } from 'src/transaction/entities/transaction.entity';
-
 
 @Entity('wallet')
 export class Wallet {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ nullable: true })
+  wallet_id: string;
+
+  @Column({ nullable: true })
+  bank: string;
+
+  @Column()
+  @Generated("uuid")
+  wallet_code: string;
+
+  @Column({ nullable: true })
+  account_number: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0.0 })
   balance: number;
@@ -30,7 +38,7 @@ export class Wallet {
   @Column({ nullable: true })
   last_modified_date: Date;
 
-  @ManyToOne(() => User, (user) => user.wallet,{ eager: true })
+  @ManyToOne(() => User, (user) => user.wallet, { eager: true })
   user: User;
 
   @OneToMany(() => Transaction, (transaction) => transaction.wallet)
@@ -46,6 +54,4 @@ export class Wallet {
   async addUpdatedate() {
     this.last_modified_date = new Date();
   }
-
-
 }

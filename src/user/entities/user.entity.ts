@@ -17,12 +17,12 @@ import { Transaction } from 'src/transaction/entities/transaction.entity';
 
 @Entity('user')
 @Unique(['email'])
-@Unique(['mobile_number'])
+// @Unique(['mobile_number'])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   username: string;
 
   @Column({ default: '' })
@@ -31,12 +31,18 @@ export class User {
   @Column({ default: '' })
   last_name: string;
 
-  @Column()
+  @Column({ nullable: true })
   @IsEmail()
   email: string;
 
   @Column()
   password: string;
+
+  @Column({nullable:true})
+  ivm: string;
+
+  @Column({ nullable: true })
+  date_of_birth: string;
 
   @Column({ default: '', length: 15 })
   mobile_number: string;
@@ -62,11 +68,11 @@ export class User {
   @OneToMany(() => Transaction, (transaction) => transaction.user)
   transaction: Transaction[];
 
-  @BeforeInsert()
-  async hashPassword() {
-    const salt = await bcrypt.genSaltSync(10);
-    this.password = await bcrypt.hashSync(this.password, salt);
-  }
+  // @BeforeInsert()
+  // async hashPassword() {
+  //   const salt = await bcrypt.genSaltSync(10);
+  //   this.password = await bcrypt.hashSync(this.password, salt);
+  // }
 
   @BeforeInsert()
   async addCreatedate() {

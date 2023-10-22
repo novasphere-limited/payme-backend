@@ -21,8 +21,8 @@ export class Transaction {
   @Column({ type: 'enum', enum: ['Transfer', 'Bill Payment', 'Others'] }) 
   transactionType: string;
 
-  @Column()
-  transferToId: number;
+  @Column({nullable:true})
+  transferToNumber: string;
 
   @Column({ nullable: true })
   created_date: Date;

@@ -22,7 +22,7 @@ export class TransactionDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  transferToId: number;
+  transferToNumber: string;
 
   @ApiProperty({ enum: TransactionTypeEnum }) 
   @IsNotEmpty()
