@@ -59,4 +59,18 @@ export class WalletService {
       );
     }
   }
+
+  async getWalletByAccountNumber(accountNumber: any):Promise<Wallet> {
+    try {
+      const retreivedWallet = await this.walletRepository.findOne({where:{account_number:accountNumber}})
+      return retreivedWallet
+    } catch (error) {
+      throw new HttpException(
+        {
+          message: 'Error: ' + error,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
 }

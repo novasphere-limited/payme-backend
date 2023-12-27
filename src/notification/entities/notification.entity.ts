@@ -11,7 +11,7 @@ export class Notification {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'enum', enum: ['Register', 'Confirm',"Confirm_Registeration","Confirm_Transfer"] })
+  @Column({ type: 'enum', enum: ['Register', 'Confirm',"Confirm_Registeration","Confirm_Transfer","Confirm_Airtime","Complete_Airtime","Complete_Transfer","Confirm_Power","Complete_Power"] })
   notification_type: string;
 
   @Column()

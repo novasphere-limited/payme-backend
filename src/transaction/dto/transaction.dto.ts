@@ -1,10 +1,14 @@
 import { IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-enum TransactionTypeEnum {
+export enum TransactionTypeEnum {
   Transfer = 'Transfer',
   BillPayment = 'Bill Payment',
   Others = 'Others',
+  Credit = "Credit",
+  Debit = "Debit",
+  Airtime = "Airtime",
+  Power = "Power"
 }
 
 export class TransactionDto {
@@ -16,13 +20,16 @@ export class TransactionDto {
   @IsNotEmpty()
   description: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  walletId: number;
 
   @ApiProperty()
   @IsNotEmpty()
-  transferToNumber: string;
+  transferToNumber?: string;
+ 
+  @ApiProperty()
+  @IsNotEmpty()
+  transferToBank?: string
+
+ 
 
   @ApiProperty({ enum: TransactionTypeEnum }) 
   @IsNotEmpty()

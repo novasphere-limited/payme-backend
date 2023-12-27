@@ -18,11 +18,14 @@ export class Transaction {
   amount: number;
 
 
-  @Column({ type: 'enum', enum: ['Transfer', 'Bill Payment', 'Others'] }) 
+  @Column({ type: 'enum', enum: ['Transfer', 'Bill Payment', 'Others','Credit',"Airtime","Power"] }) 
   transactionType: string;
 
   @Column({nullable:true})
   transferToNumber: string;
+
+  @Column({nullable:true})
+  transferToBank: string;
 
   @Column({ nullable: true })
   created_date: Date;

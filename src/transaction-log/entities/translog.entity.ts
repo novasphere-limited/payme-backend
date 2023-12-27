@@ -21,7 +21,7 @@ export class Translog {
   @Column({ default: true })
   is_request: boolean;
 
-  @Column({type: 'enum', enum: ['Fail', 'Success'] })
+  @Column({type: 'enum', enum: ['Fail', 'Success', "success"] })
   status: string;
 
   @Column()

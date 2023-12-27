@@ -101,6 +101,32 @@ export class TransactionLogService {
               );
             }
           }
+
           
+          async transactionStatus(transCode: number) {
+            try {
+                this.loggingService.log({
+                    event: 'method_start',
+                    message: 'retreiving a transaction status',
+                  });
+              const translog = await this.translogRepository.findOne({
+                where: { transaction_code:transCode },
+              });
+              if(!translog) throw new BadRequestException("This transaction log does not exist")
+              this.loggingService.log({
+                event: 'method_end',
+                message: 'Transaction log retreived successfully',
+              });
+
+              return translog.status
+            } catch (error) {
+              throw new HttpException(
+                {
+                  message: 'Error: ' + error,
+                },
+                HttpStatus.BAD_REQUEST,
+              );
+            }
+          }  
         
 }
