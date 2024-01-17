@@ -43,7 +43,7 @@ export class NotificationService {
    
   }
 
-  async singleNotification(id: number):Promise<Notification> {
+  async singleNotification(id: string):Promise<Notification> {
     try {
       const notification = await this.notificationRepository.findOne({
         where: { id },
@@ -60,7 +60,7 @@ export class NotificationService {
     }
   }
 
-  async editNotification(id: number,updateNotification:UpdateNotificationDto):Promise<Notification> {
+  async editNotification(id: string,updateNotification:UpdateNotificationDto):Promise<Notification> {
     try {
       const notification = await this.notificationRepository.findOne({
         where: { id,
@@ -97,7 +97,7 @@ export class NotificationService {
     }
   }
 
-  async deleteNotification(id: number) {
+  async deleteNotification(id: string) {
     try {
       const notification = await this.notificationRepository.findOne({
         where: { id,

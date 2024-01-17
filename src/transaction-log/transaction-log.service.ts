@@ -44,7 +44,7 @@ export class TransactionLogService {
            
           } 
 
-          async singleTranslog(id: number):Promise<Translog> {
+          async singleTranslog(id: string):Promise<Translog> {
             try {
                 this.loggingService.log({
                     event: 'method_start',

@@ -180,7 +180,7 @@ export class TransactionService {
     }
   }
 
-  async singleTransaction(id: number) {
+  async singleTransaction(id: string) {
     try {
       const transaction = await this.transactionRepository.findOne({
         where: { id },
@@ -390,12 +390,12 @@ export class TransactionService {
   
        
       
-      // Define the properties to exclude
+      
       const excludedProperties = ["id", "created_date", "last_modified_date","transactionId"];
       
-      // Filter and transform the data
+     
       const filteredData = transactions.map(item => {
-          // Create a new object without the excluded properties
+         
           const filteredItem = Object.keys(item)
               .filter(key => !excludedProperties.includes(key))
               .reduce((obj, key) => {

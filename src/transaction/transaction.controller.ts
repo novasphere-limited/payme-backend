@@ -77,7 +77,7 @@ export class TransactionController {
   @UseGuards(localAuthGuard)
   @Get(':id')
   async getTransaction(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id') id: string,
   ): Promise<BaseResponse> {
     const transaction = await this.transactionService.singleTransaction(id);
     return {

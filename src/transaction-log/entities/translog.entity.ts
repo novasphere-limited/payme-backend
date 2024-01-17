@@ -9,8 +9,8 @@ import {
 
 @Entity()
 export class Translog {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column({ nullable: true })
   request_time: string;
