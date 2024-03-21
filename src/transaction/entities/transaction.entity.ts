@@ -3,10 +3,12 @@ import { Wallet } from 'src/wallet/entities/wallet.entity';
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert,
     BeforeUpdate, OneToOne, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 
+import {transactionType} from "../enum/transactionType"
+
 @Entity('transaction')
 export class Transaction {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column({ type: 'varchar',  unique: true, generated: 'uuid' })
   transactionId: string;
@@ -18,11 +20,14 @@ export class Transaction {
   amount: number;
 
 
-  @Column({ type: 'enum', enum: ['Transfer', 'Bill Payment', 'Others'] }) 
+  @Column({ type: 'enum', enum: transactionType }) 
   transactionType: string;
 
   @Column({nullable:true})
   transferToNumber: string;
+
+  @Column({nullable:true})
+  transferToBank: string;
 
   @Column({ nullable: true })
   created_date: Date;

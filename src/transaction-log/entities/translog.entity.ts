@@ -9,8 +9,8 @@ import {
 
 @Entity()
 export class Translog {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column({ nullable: true })
   request_time: string;
@@ -21,7 +21,7 @@ export class Translog {
   @Column({ default: true })
   is_request: boolean;
 
-  @Column({type: 'enum', enum: ['Fail', 'Success'] })
+  @Column({type: 'enum', enum: ['Fail', 'Success', "success"] })
   status: string;
 
   @Column()

@@ -5,19 +5,21 @@ import {
   BeforeInsert,
   BeforeUpdate,
 } from 'typeorm';
+import {notificationType} from "../enum/notificationType"
+import {notificationStatus} from "../enum/notificationStatus"
 
 @Entity()
 export class Notification {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-  @Column({ type: 'enum', enum: ['Register', 'Confirm',"Confirm_Registeration","Confirm_Transfer"] })
+  @Column({ type: 'enum', enum: notificationType })
   notification_type: string;
 
   @Column()
   message: string;
 
-  @Column({ type: 'enum', enum: ['Active', 'Inactive'], default: 'Active' })
+  @Column({ type: 'enum', enum: notificationStatus, default: notificationStatus.Active })
   status: string;
 
   @Column({ default: false })

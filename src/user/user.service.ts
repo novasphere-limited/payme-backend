@@ -60,6 +60,7 @@ export class UserService {
         message: 'Getting user details',
       });
       const wordCount = message.split(' ').length;
+      console.log(message)
       if (wordCount !== 2)
         throw new BadRequestException('Invalid message format');
       
@@ -79,6 +80,10 @@ export class UserService {
 
       const url = this.config.get('VERIFICATION_API');
 
+      if(bvn.length !== 11){
+        throw new BadRequestException("Invalid BVN number")
+      }
+
       const data = {
         phone: newPhoneNumber,
         bvn
@@ -90,7 +95,7 @@ export class UserService {
         },
       });
     
-  
+     
       if (response.data.success === false) {
         throw new BadRequestException('Invalid bvn number');
       }
@@ -162,9 +167,9 @@ export class UserService {
 
       transCod = response.transCode;
       const expirationTime = response.expirationTime;
-      if (Date.now() > expirationTime) {
-        throw new BadRequestException('Transaction code has expired');
-      }
+      // if (Date.now() > expirationTime) {
+      //   throw new BadRequestException('Transaction code has expired');
+      // }
 
       const dob = response.personal_info.date_of_birth;
       const userYear = dob.split('-')[0];
@@ -213,7 +218,7 @@ export class UserService {
         Authorization: sageSecretKey
       },
     });
-   
+ 
     const account_number = virtualResponse.data.data.account_details.account_number
     const bank = virtualResponse.data.data.account_details.bank_name
     const wallet_id = newPhoneNumber.replace(/^0+/, '');
@@ -236,7 +241,7 @@ export class UserService {
        
       ]);
      
-     
+      console.log(wallet)
       delete createdUser.password;
       return {createdUser,wallet}
     } catch (error) {

@@ -56,7 +56,7 @@ export class NotificationController {
 //   @UseGuards(localAuthGuard)
   @Get(':id')
   async getNotification(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id') id: string,
   ): Promise<BaseResponse> {
     const transaction = await this.notificationService.singleNotification(id);
     return {
@@ -73,7 +73,7 @@ export class NotificationController {
 //   @UseGuards(localAuthGuard)
   @Put(':id')
   async editNotification(
-    @Param('id', ParseIntPipe) id: number,@Body() updateNotificationDto:UpdateNotificationDto
+    @Param('id') id: string,@Body() updateNotificationDto:UpdateNotificationDto
   ): Promise<BaseResponse> {
     const transaction = await this.notificationService.editNotification(id,updateNotificationDto);
     return {
@@ -90,7 +90,7 @@ export class NotificationController {
 //   @UseGuards(localAuthGuard)
   @Delete(':id')
   async deleteNotification(
-    @Param('id', ParseIntPipe) id: number
+    @Param('id') id: string
   ){
     const transaction = await this.notificationService.deleteNotification(id);
     return {

@@ -212,3 +212,167 @@ export const banks = {
     bank_name: 'eTranzact',
   },
 }
+
+export const airtime = {
+  mtn:{
+    network:"MTN",
+    service:"MTNVTU",
+  },
+  glo:{
+    network:"GLO",
+    service:"GLOVTU",
+  },
+  airtel:{
+    network:"AIRTEL",
+    service:"AIRTELVTU",
+  },
+  "9mobile":{
+    network:"9MOBILE",
+    service:"9MOBILEVTU",
+  }
+
+}
+
+export const electricityBillers = {
+ 
+ 
+
+    joselectric:{
+      type: "jos_electric_prepaid",
+      id: 2,
+      narration: "Jos Prepaid",
+      product_id: 3,
+      short_name: "jos electric prepaid",
+      image: "https://sagecloud.ng/assets/images/billers/capricorn/jos_electric.webp",
+      disco:"JOS"
+    },
+    kadunaelectric:{
+      type: "kaduna_electric_prepaid",
+      id: 3,
+      narration: "Kaduna Prepaid",
+      product_id: 5,
+      short_name: "kaduna electric prepaid",
+      image: "https://sagecloud.ng/assets/images/billers/capricorn/elect.webp",
+      disco:"KADUNA"
+    },
+    ekoelectric:{
+      type: "eko_electric_prepaid",
+      id: 5,
+      narration: "Eko Prepaid",
+      product_id: 11,
+      short_name: "eko electric prepaid",
+      image: "https://sagecloud.ng/assets/images/billers/capricorn/eko_electric.webp",
+      disco:"EKO"
+    },
+    ibadanelectric:{
+      type: "ibadan_electric_prepaid",
+      id: 6,
+      narration: "Ibadan Disco Prepaid (Fets Wallet)",
+      product_id: 12,
+      short_name: "ibadan electric prepaid",
+      image: "https://sagecloud.ng/assets/images/billers/capricorn/ibadan_electric.webp",
+      disco:"IBADAN"
+    },
+    // {
+    //   "type": "portharcourt_electric_postpaid",
+    //   "id": 7,
+    //   "narration": "Port Harcourt Postpaid (Xpresspayments)",
+    //   "product_id": 13,
+    //   "short_name": "portharcourt electric postpaid",
+    //   "image": "https://sagecloud.ng/assets/images/billers/capricorn/portharcourt_electric.webp"
+    // },
+    portharcourtelectric:{
+      type: "portharcourt_electric_prepaid",
+      id: 7,
+      narration: "Port Harcourt Prepaid (Xpresspayments)",
+      product_id: 14,
+      short_name: "portharcourt electric prepaid",
+      image: "https://sagecloud.ng/assets/images/billers/capricorn/portharcourt_electric.webp",
+      disco:"PORTHARCOURT"
+    },
+    // {
+    //   "type": "enugu_electric_postpaid",
+    //   "id": 8,
+    //   "narration": "Enugu Postpaid",
+    //   "product_id": 15,
+    //   "short_name": "enugu electric postpaid",
+    //   "image": "https://sagecloud.ng/assets/images/billers/capricorn/enugu_electric.webp"
+    // },
+    enuguelectric:{
+      type: "enugu_electric_prepaid",
+      id: 8,
+      narration: "Enugu Prepaid",
+      product_id: 16,
+      short_name: "enugu electric prepaid",
+      image: "https://sagecloud.ng/assets/images/billers/capricorn/enugu_electric.webp",
+      disco:"ENUGU"
+    },
+    // {
+    //   "type": "abuja_electric_postpaid",
+    //   "id": 9,
+    //   "narration": "Abuja Postpaid",
+    //   "product_id": 17,
+    //   "short_name": "abuja electric postpaid",
+    //   "image": "https://sagecloud.ng/assets/images/billers/capricorn/abuja_electric.webp"
+    // },
+    abujaelectric:{
+      type: "abuja_electric_prepaid",
+      id: 9,
+      narration: "Abuja Prepaid",
+      product_id: 18,
+      short_name: "abuja electric prepaid",
+      image: "https://sagecloud.ng/assets/images/billers/capricorn/abuja_electric.webp",
+      disco:"ABUJA"
+    },
+    // {
+    //   "type": "kedco_electric_postpaid",
+    //   "id": 10,
+    //   "narration": "Kano Postpaid",
+    //   "product_id": 21,
+    //   "short_name": "kedco electric postpaid",
+    //   "image": "https://sagecloud.ng/assets/images/billers/capricorn/kedco_electric.webp"
+    // },
+    kedcoelectric:{
+      type: "kedco_electric_prepaid",
+      id: 10,
+      narration: "Kano Prepaid",
+      product_id: 22,
+      short_name: "kedco electric prepaid",
+      image: "https://sagecloud.ng/assets/images/billers/capricorn/kedco_electric.webp",
+      disco:"KANO"
+    },
+    ikejaelectric:{
+      type: "ikeja_electric_prepaid",
+      id: 4,
+      narration: "Ikeja Disco Token Vending (Prepaid)",
+      product_id: 25,
+      short_name: "ikeja electric prepaid",
+      image: "https://sagecloud.ng/assets/images/billers/capricorn/ikeja_electric.webp",
+      disco:"IKEDC"
+    },
+    // {
+    //   "type": "ikeja_electric_postpaid",
+    //   "id": 4,
+    //   "narration": "Ikeja Disco Bill Payment (Postpaid)",
+    //   "product_id": 26,
+    //   "short_name": "ikeja electric postpaid",
+    //   "image": "https://sagecloud.ng/assets/images/billers/capricorn/ikeja_electric.webp"
+    // },
+    // {
+    //   "type": "eko_electric_postpaid",
+    //   "id": 5,
+    //   "narration": "Eko Postpaid",
+    //   "product_id": 27,
+    //   "short_name": "eko electric postpaid",
+    //   "image": "https://sagecloud.ng/assets/images/billers/capricorn/eko_electric.webp"
+    // },
+    // {
+    //   "type": "ibadan_electric_postpaid",
+    //   "id": 6,
+    //   "narration": "Ibadan Disco Postpaid (Fets Wallet)",
+    //   "product_id": 44,
+    //   "short_name": "ibadan electric postpaid",
+    //   "image": "https://sagecloud.ng/assets/images/billers/capricorn/ibadan_electric.webp"
+    // }
+
+}

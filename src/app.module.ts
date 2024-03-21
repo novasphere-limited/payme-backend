@@ -18,6 +18,7 @@ import { NotificationModule } from './notification/notification.module';
 import { TtlModule } from './ttl/ttl.module';
 import { TransactionLogModule } from './transaction-log/transaction-log.module';
 import { ConfigcatModule } from './configcat/configcat.module';
+import { BillModule } from './bill/bill.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { ConfigcatModule } from './configcat/configcat.module';
     TtlModule,
     TransactionLogModule,
     ConfigcatModule,
+    BillModule,
   ],
   providers: [JwtService, ConfigService],
 })

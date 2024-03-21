@@ -36,7 +36,7 @@ export class TransactionLogController {
     //   @UseGuards(localAuthGuard)
       @Get(':id')
       async getTransactionLog(
-        @Param('id', ParseIntPipe) id: number,
+        @Param('id') id: string,
       ): Promise<BaseResponse> {
         const transaction = await this.transactionLogService.singleTranslog(id);
         return {

@@ -11,7 +11,8 @@ const crypto = require('crypto');
 const algorithm = 'aes-256-cbc';
  
 
-const secret = "secret"
+// const secret = "secret"
+const secret = process.env.HASH_SECRET
 let key = crypto.createHash('sha256').update(String(secret)).digest('base64').substr(0, 32);
 
  
@@ -60,7 +61,7 @@ export class HelperService {
 
  async accessToken(token:string | null){
     const decodedToken = decode(token) as JwtPayload;
-    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds since the Unix epoch
+    const currentTime = Math.floor(Date.now() / 1000); 
     if (!decodedToken || decodedToken.exp < currentTime ) {
       console.log("expired")
       const email = this.config.get("ERICAS_EMAIL")
@@ -108,5 +109,13 @@ export class HelperService {
   
     return replacedNumber;
   }
+
+   generateTransactionReference() {
+    const timestamp = new Date().getTime(); 
+    const randomString = Math.random().toString(36).substring(2, 15); 
+    const transactionReference = `TRX-${randomString}`;
+
+    return transactionReference;
+}
 }
 
